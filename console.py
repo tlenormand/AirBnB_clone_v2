@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import ast
 
 
 class HBNBCommand(cmd.Cmd):
@@ -115,13 +116,21 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        listArgs = args.split(" ")
+        if not listArgs:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif listArgs[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[listArgs[0]]()
+        for attribute in listArgs[1:]:
+            if attribute.split("=")[0] in HBNBCommand.classes[listArgs[0]].__dict__:
+                className = listArgs[0]
+                id = new_instance.id
+                attName = "\"" + attribute.split("=")[0] + "\""
+                attVal = attribute.split("=")[1].replace("_", " ")
+                HBNBCommand.do_update(self, f"{className} {id} {attName} {attVal}")
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -284,7 +293,7 @@ class HBNBCommand(cmd.Cmd):
                 att_name = args[0]
             # check for quoted val arg
             if args[2] and args[2][0] == '\"':
-                att_val = args[2][1:args[2].find('\"', 1)]
+                att_val = args[2][1:args[2].rfind('\"', 1)]
 
             # if att_val was not quoted arg
             if not att_val and args[2]:
@@ -309,6 +318,9 @@ class HBNBCommand(cmd.Cmd):
                 # type cast as necessary
                 if att_name in HBNBCommand.types:
                     att_val = HBNBCommand.types[att_name](att_val)
+
+                if isinstance(att_val, str):
+                    att_val = att_val.replace('\\"', '"')
 
                 # update dictionary with name, value pair
                 new_dict.__dict__.update({att_name: att_val})
