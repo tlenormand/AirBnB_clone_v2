@@ -1,65 +1,9 @@
 {
-  "User.43d09b91-420f-4739-a6fe-2cee37f0ab4a": {
-    "id": "43d09b91-420f-4739-a6fe-2cee37f0ab4a",
-    "created_at": "2022-04-08T11:05:51.069325",
-    "updated_at": "2022-04-08T11:05:51.069328",
-    "__class__": "User"
-  },
-  "User.900a0de3-f863-4e94-bae5-f490dee77071": {
-    "id": "900a0de3-f863-4e94-bae5-f490dee77071",
-    "created_at": "2022-04-08T11:06:51.685793",
-    "updated_at": "2022-04-08T11:06:51.686109",
-    "first_name": "fefefe",
-    "password": "1234",
-    "__class__": "User"
-  },
-  "Place.95a821ec-d93e-4e66-a0b2-47b7f9cba206": {
-    "id": "95a821ec-d93e-4e66-a0b2-47b7f9cba206",
-    "created_at": "2022-04-08T11:07:18.294319",
-    "updated_at": "2022-04-08T11:07:18.294323",
-    "__class__": "Place"
-  },
-  "User.5a537c46-fee6-4d60-a401-261d379cf29b": {
-    "id": "5a537c46-fee6-4d60-a401-261d379cf29b",
-    "created_at": "2022-04-08T11:08:55.825980",
-    "updated_at": "2022-04-08T11:08:55.826315",
-    "first_name": "fefefe",
-    "password": "1234",
-    "__class__": "User"
-  },
-  "Place.2dbab5ae-971f-4630-abcc-8020646639cf": {
-    "id": "2dbab5ae-971f-4630-abcc-8020646639cf",
-    "created_at": "2022-04-08T11:09:02.395780",
-    "updated_at": "2022-04-08T11:09:02.395860",
-    "number_rooms": 2,
-    "__class__": "Place"
-  },
-  "Place.dbc47c61-66e1-4365-849f-a68b80f615e4": {
-    "id": "dbc47c61-66e1-4365-849f-a68b80f615e4",
-    "created_at": "2022-04-08T11:11:24.830483",
-    "updated_at": "2022-04-08T11:11:24.830561",
-    "latitude": 0.123,
-    "__class__": "Place"
-  },
-  "Place.7cc3b5d0-bc13-4870-abdd-4b9d0b149c76": {
-    "id": "7cc3b5d0-bc13-4870-abdd-4b9d0b149c76",
-    "created_at": "2022-04-08T11:12:46.030266",
-    "updated_at": "2022-04-08T11:12:46.030349",
-    "latitude": 0.123,
-    "__class__": "Place"
-  },
-  "Place.696a365d-1b89-49d2-bc4a-9883e895a526": {
-    "id": "696a365d-1b89-49d2-bc4a-9883e895a526",
-    "created_at": "2022-04-08T11:12:54.963750",
-    "updated_at": "2022-04-08T11:12:54.963808",
-    "latitude": 2.0,
-    "__class__": "Place"
-  },
-  "Place.53e40871-0b22-4d07-b7df-cbacabf0cf42": {
-    "id": "53e40871-0b22-4d07-b7df-cbacabf0cf42",
-    "created_at": "2022-04-08T11:14:06.673232",
-    "updated_at": "2022-04-08T11:14:06.673312",
-    "name": "my house \"miata\" is so cool!",
-    "__class__": "Place"
+  "State.9ab3ab63-f184-476b-be5f-a1aca50b1875": {
+    "id": "9ab3ab63-f184-476b-be5f-a1aca50b1875",
+    "created_at": "2022-04-08T13:47:26.591017",
+    "updated_at": "2022-04-08T13:47:26.591018",
+    "name": "Nevada",
+    "__class__": "State"
   }
 }
