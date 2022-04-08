@@ -6,7 +6,6 @@ Execute all tests: python3 -m unittest discover tests
 Execute this test: python3 -m unittest tests/test_console.py
 """
 
-from tests.test_requirements import TestRequirements
 from models.user import User
 from models.base_model import BaseModel
 from models.user import User
