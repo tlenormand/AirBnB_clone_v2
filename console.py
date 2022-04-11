@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import ast
 
 
 class HBNBCommand(cmd.Cmd):
@@ -73,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] == '{' and pline[-1] =='}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -115,14 +116,34 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        listArgs = args.split(" ")
+        if not listArgs:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif listArgs[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        new_instance = HBNBCommand.classes[listArgs[0]]()
+        for attribute in listArgs[1:]:
+            attName = attribute.split("=")[0]
+            attValue = attribute.split("=")[1]
+            if attName in HBNBCommand.classes[listArgs[0]].__dict__:
+                if (
+                    attValue[0] == '"' and
+                    attValue[len(attValue) - 1] == '"' or
+                    attName in HBNBCommand.types
+                ):
+                    className = listArgs[0]
+                    id = new_instance.id
+                    attName = "\"" + attName + "\""
+                    attVal = attValue.replace("_", " ")
+                    try:
+                        HBNBCommand.do_update(
+                            self,
+                            f"{className} {id} {attName} {attVal}"
+                        )
+                    except Exception:
+                        pass
         print(new_instance.id)
         storage.save()
 
@@ -284,7 +305,7 @@ class HBNBCommand(cmd.Cmd):
                 att_name = args[0]
             # check for quoted val arg
             if args[2] and args[2][0] == '\"':
-                att_val = args[2][1:args[2].find('\"', 1)]
+                att_val = args[2][1:args[2].rfind('\"', 1)]
 
             # if att_val was not quoted arg
             if not att_val and args[2]:
@@ -310,6 +331,9 @@ class HBNBCommand(cmd.Cmd):
                 if att_name in HBNBCommand.types:
                     att_val = HBNBCommand.types[att_name](att_val)
 
+                if isinstance(att_val, str):
+                    att_val = att_val.replace('\\"', '"')
+
                 # update dictionary with name, value pair
                 new_dict.__dict__.update({att_name: att_val})
 
@@ -319,6 +343,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
