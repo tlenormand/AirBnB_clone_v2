@@ -10,8 +10,8 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        clsDict = {}
         if cls is not None:
+            clsDict = {}
             for key, value in self.__objects.items():
                 if cls.__name__ in key:
                     clsDict[key] = value
@@ -40,7 +40,6 @@ class FileStorage:
         from models.city import City
         from models.amenity import Amenity
         from models.review import Review
-
         classes = {
                     'BaseModel': BaseModel, 'User': User, 'Place': Place,
                     'State': State, 'City': City, 'Amenity': Amenity,
@@ -58,7 +57,7 @@ class FileStorage:
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
         if obj:
-            delObject = obj.__class__.__name__ + "." + obj.id
-            if delObject in self.__objects.keys():
-                del self.__objects[delObject]
+            key = obj.__class__.__name__ + "." + obj.id
+            if key in self.__objects.keys():
+                del self.__objects[key]
                 self.save()
