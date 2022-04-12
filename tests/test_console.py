@@ -6,6 +6,7 @@ Execute all tests: python3 -m unittest discover tests
 Execute this test: python3 -m unittest tests/test_console.py
 """
 
+from tests.test_requirements import TestRequirements
 from models.user import User
 from models.base_model import BaseModel
 from models.user import User
@@ -26,7 +27,7 @@ import os
 import ast
 
 
-class TestConsole(unittest.TestCase):
+class TestConsole(TestRequirements, unittest.TestCase):
     """
     class that test console
     """
@@ -50,37 +51,43 @@ class TestConsole(unittest.TestCase):
         "State"
     ]
 
-    def test_conformance(self):
-        """Test that we conform to PEP-8."""
-        style = pycodestyle.StyleGuide(quiet=True)
-        result = style.check_files([self.path])
-        self.assertEqual(
-            result.total_errors, 0,
-            f"Found code style errors (pycodestyle) in file test_console.py"
-        )
+#     def test_conformance(self):
+#         """Test that we conform to PEP-8."""
+#         style = pycodestyle.StyleGuide(quiet=True)
+#         result = style.check_files([self.path])
+#         self.assertEqual(
+#             result.total_errors, 0,
+#             f"Found code style errors (pycodestyle) in file test_console.py"
+#         )
 
-    def test_documentation(self):
-        """test all documentation of module"""
-        # module documentation
-        self.assertIsNotNone(
-            console.__doc__,
-            "Missing: module documentation of file \"console.py\"")
+#     def test_documentation(self):
+#         """test all documentation of module"""
+#         # module documentation
+#         self.assertIsNotNone(
+#             console.__doc__,
+#             "Missing: module documentation of file \"console.py\"")
 
-        # classes documentation
-        for key, value in console.__dict__.items():
-            if callable(value):
-                self.assertIsNotNone(
-                    value.__doc__, f"Missing: class documentation \
-of class \"{value.__name__}\"")
+#         # classes documentation
+#         for key, value in console.__dict__.items():
+#             if callable(value):
+#                 self.assertIsNotNone(
+#                     value.__doc__, f"Missing: class documentation \
+# of class \"{value.__name__}\"")
 
-        # functions documentation
-        for key, value in console.__dict__.items():
-            if callable(value):
-                for key2, value2 in value.__dict__.items():
-                    if callable(value2):
-                        self.assertIsNotNone(
-                            value2.__doc__, f"Missing: function documentation \
-of function \"{value2.__name__}\"")
+#         # functions documentation
+#         for key, value in console.__dict__.items():
+#             if callable(value):
+#                 for key2, value2 in value.__dict__.items():
+#                     if callable(value2):
+#                         self.assertIsNotNone(
+#                             value2.__doc__, f"Missing: function documentation \
+# of function \"{value2.__name__}\"")
+
+    @classmethod
+    def setUpClass(self):
+        """le setup de test_city"""
+        # self._path_list.append("tests/test_console.py")
+        self._path_list.append("console.py")
 
     def setUp(self):
         try:

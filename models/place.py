@@ -12,16 +12,14 @@ if getenv("HBNB_TYPE_STORAGE") == "db":
         Column(
             'place_id',
             String(60),
-            ForeignKey('places.id'),
-            primary_key=True,
-            nullable=False
+            ForeignKey('places.id', onupdate="CASCADE", ondelete="CASCADE"),
+            primary_key=True
         ),
         Column(
             'amenity_id',
             String(60),
-            ForeignKey('amenities.id'),
-            primary_key=True,
-            nullable=False
+            ForeignKey('amenities.id', onupdate="CASCADE", ondelete="CASCADE"),
+            primary_key=True
         )
     )
 
@@ -68,7 +66,7 @@ class Place(BaseModel, Base):
         amenity_ids = []
 
         @property
-        def get_reviews(self):
+        def reviews(self):
             listReview = []
             for k in storage.__object:
                 if (k["__class__"] == "Review") and k["place_id"] == self.id:

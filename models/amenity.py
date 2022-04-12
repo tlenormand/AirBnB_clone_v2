@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 
 
 class Amenity(BaseModel, Base):
+    """ Amenity class """
     __tablename__ = "amenities"
     if getenv("HBNB_TYPE_STORAGE") == "db":
         from models.place import place_amenity
