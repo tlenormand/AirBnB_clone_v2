@@ -2,6 +2,8 @@
 """ Console Module """
 import cmd
 import sys
+from os import getenv
+from sqlalchemy import create_engine
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -10,7 +12,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-import ast
+from sqlalchemy.orm import Session
 
 
 class HBNBCommand(cmd.Cmd):
@@ -135,17 +137,20 @@ class HBNBCommand(cmd.Cmd):
                 ):
                     className = listArgs[0]
                     id = new_instance.id
-                    attName = "\"" + attName + "\""
-                    attVal = attValue.replace("_", " ")
-                    try:
-                        HBNBCommand.do_update(
-                            self,
-                            f"{className} {id} {attName} {attVal}"
-                        )
-                    except Exception:
-                        pass
+                    # attName = "\"" + attName + "\""
+                    attVal = attValue.replace("_", " ").strip('"')
+                    setattr(new_instance, attName, attVal)
+                    # try:
+                    #     HBNBCommand.do_update(
+                    #         self,
+                    #         f"{className} {id} {attName} {attVal}"
+                    #     )
+                    # except Exception:
+                    #     pass
         print(new_instance.id)
-        storage.save()
+        new_instance.save()
+        # storage.new(new_instance)
+        # storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -220,24 +225,41 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        print_list = []
-
+        from sqlalchemy import Column
+        listObject = []
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+            if getenv("HBNB_TYPE_STORAGE") == "db":
+                engine = create_engine(
+                    'mysql+mysqldb://{}:{}@{}/{}'.format(
+                        getenv("HBNB_MYSQL_USER"),
+                        getenv("HBNB_MYSQL_PWD"),
+                        getenv("HBNB_MYSQL_HOST"),
+                        getenv("HBNB_MYSQL_DB")
+                    ),
+                    pool_pre_ping=True
+                )
+                session = Session(engine)
+                query = session.query(eval(args)).all()
+                for k in query:
+                    listObject.append(k.__str__())
+            else:
+                for k, v in storage._FileStorage__objects.items():
+                    if k.split('.')[0] == args:
+                        listObject.append(str(v))
         else:
             for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
+                listObject.append(str(v))
 
-        print(print_list)
+        print("[", end='')
+        print(', '.join(listObject), end='')
+        print("]")
 
     def help_all(self):
-        """ Help information for the all command """
+        """ Help informati("\"")on for the all command """
         print("Shows all objects, or all of a class")
         print("[Usage]: all <className>\n")
 
