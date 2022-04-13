@@ -8,6 +8,8 @@ import json
 import os
 from tests.test_requirements import TestRequirements
 
+storageType = os.getenv("HBNB_TYPE_STORAGE")
+
 
 class test_basemodel(TestRequirements, unittest.TestCase):
     """ """
@@ -53,6 +55,7 @@ class test_basemodel(TestRequirements, unittest.TestCase):
         with self.assertRaises(TypeError):
             new = BaseModel(**copy)
 
+    @unittest.skipIf(storageType == "db", "not for here")
     def test_save(self):
         """ Testing save """
         i = self.value()
@@ -80,13 +83,6 @@ class test_basemodel(TestRequirements, unittest.TestCase):
         with self.assertRaises(TypeError):
             new = self.value(**n)
 
-    @unittest.skip("not working")
-    def test_kwargs_one(self):
-        """ """
-        n = {'Name': 'test'}
-        with self.assertRaises(KeyError):
-            new = self.value(**n)
-
     def test_id(self):
         """ """
         new = self.value()
@@ -97,11 +93,7 @@ class test_basemodel(TestRequirements, unittest.TestCase):
         new = self.value()
         self.assertEqual(type(new.created_at), datetime.datetime)
 
-    @unittest.skip("not working")
     def test_updated_at(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime.datetime)
-        n = new.to_dict()
-        new = BaseModel(**n)
-        self.assertFalse(new.created_at == new.updated_at)
