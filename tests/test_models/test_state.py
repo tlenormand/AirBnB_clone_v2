@@ -6,6 +6,11 @@ from models.state import State
 
 class test_state(test_basemodel):
     """ """
+    @classmethod
+    def setUpClass(self):
+        """le setup de test_state"""
+        # self._path_list.append("tests/test_city.py")
+        self._path_list.append("models/state.py")
 
     def __init__(self, *args, **kwargs):
         """ """

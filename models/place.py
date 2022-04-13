@@ -8,7 +8,9 @@ from sqlalchemy.orm import relationship
 
 
 if getenv("HBNB_TYPE_STORAGE") == "db":
-    place_amenity = Table('place_amenity', Base.metadata,
+    place_amenity = Table(
+        'place_amenity',
+        Base.metadata,
         Column(
             'place_id',
             String(60),
@@ -22,6 +24,7 @@ if getenv("HBNB_TYPE_STORAGE") == "db":
             primary_key=True
         )
     )
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -83,5 +86,6 @@ class Place(BaseModel, Base):
             """ set amenities """
             self.amenity_ids = []
             for k in storage.__object:
-                if (k["__class__"] == "Amenity") and k["amenity_id"] == self.id:
+                if ((k["__class__"] == "Amenity") and
+                   k["amenity_id"] == self.id):
                     self.amenity_ids.append(k.id)

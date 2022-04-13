@@ -6,6 +6,11 @@ from models.user import User
 
 class test_User(test_basemodel):
     """ """
+    @classmethod
+    def setUpClass(self):
+        """le setup de test_User"""
+        # self._path_list.append("tests/test_city.py")
+        self._path_list.append("models/user.py")
 
     def __init__(self, *args, **kwargs):
         """ """
