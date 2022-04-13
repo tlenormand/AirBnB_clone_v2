@@ -27,10 +27,12 @@ class TestRequirements(object):
 
     @classmethod
     def setUpClass(self):
+        """ doc setUpClass """
         pass
 
     @classmethod
     def tearDownClass(self):
+        """ doc tearDownClass """
         self._path_list.clear()
         pass
 
@@ -54,12 +56,12 @@ class TestRequirements(object):
             textfile.close()
 
             # find classes in the file
-            matches = re.findall("class .+\(.+\):", filetext)
+            matches = re.findall("class .+(.+):", filetext)
             if matches:
 
                 # browse each matches classes
                 for matche in matches:
-                    class_name = re.search("class (.+)\(.+\):", str(matche))
+                    class_name = re.search("class (.+)(.+):", str(matche))
                     if class_name:
                         _class = class_name.group(1)
 
@@ -77,16 +79,21 @@ class TestRequirements(object):
                             if inspect.isclass(value):
                                 self.assertIsNotNone(
                                     value.__doc__,
-                                    f"Missing: documentation of class \"{value.__name__}\" in \"{_path}\""
+                                    f"Missing: \
+documentation of class \"{value.__name__}\" in \"{_path}\""
                                 )
                                 # check for function documentation
-                                for key, value in getattr(module, _class).__dict__.items():
+                                for key, value in getattr(
+                                    module,
+                                    _class
+                                ).__dict__.items():
                                     if inspect.isfunction(value):
                                         self.assertIsNotNone(
                                             value.__doc__,
-                                            f"Missing: documentation of function \"{value.__name__}\" in \"{_path}\""
+                                            f"Missing: \
+documentation of function \"{value.__name__}\" in \"{_path}\""
                                         )
-                    else:
-                        print(f"class has an unvalid name: {matche} in {_path}")
+                    # else:
+                    #     print(f"class has unvalid name: {matche} in {_path}")
             # else:
             #     print(f"no class found in {matches} in {_path}")

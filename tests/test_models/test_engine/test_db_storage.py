@@ -9,5 +9,7 @@ class test_dbstorage(TestRequirements, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         """le setup de db_storage"""
-        # self._path_list.append("tests/test_city.py")
+        self._path_list.append(
+            "tests/test_models/test_engine/test_db_storage.py"
+        )
         self._path_list.append("models/engine/db_storage.py")

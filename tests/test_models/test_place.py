@@ -9,7 +9,7 @@ class test_Place(test_basemodel):
     @classmethod
     def setUpClass(self):
         """le setup de test_Place"""
-        # self._path_list.append("tests/test_city.py")
+        self._path_list.append("tests/test_models/test_place.py")
         self._path_list.append("models/place.py")
 
     def __init__(self, *args, **kwargs):

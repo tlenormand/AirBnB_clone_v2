@@ -25,15 +25,23 @@ This repository contains the initial stage of a student project to build a clone
 
 1. First clone this repository.
 
-3. Once the repository is cloned locate the "console.py" file and run it as follows:
+2. Once the repository is cloned locate the "console.py" file and run it as follows:
 ```
 /AirBnB_clone$ ./console.py
 ```
-4. When this command is run the following prompt should appear:
+You can precise type of storage wanted by using the environement variable HBNB_TYPE_STORAGE. Value file for file storage with JSON serialization and deserialization, or db for database storage.
+
+For database storage you can choose the user, password, host and database with the following environemnt variables and run "console.py" as follows:
+
+```
+HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./console.py
+```
+
+3. When this command is run the following prompt should appear:
 ```
 (hbnb)
 ```
-5. This prompt designates you are in the "HBnB" console. There are a variety of commands available within the console program.
+4. This prompt designates you are in the "HBnB" console. There are a variety of commands available within the console program.
 
 ##### Commands
     * create - Creates an instance based on given class
