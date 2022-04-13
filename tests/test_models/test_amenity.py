@@ -5,7 +5,12 @@ from models.amenity import Amenity
 
 
 class test_Amenity(test_basemodel):
-    """ """
+    """ test class amenity """
+    @classmethod
+    def setUpClass(self):
+        """le setup de test_Amenity"""
+        # self._path_list.append("tests/test_city.py")
+        self._path_list.append("models/amenity.py")
 
     def __init__(self, *args, **kwargs):
         """ """

@@ -6,6 +6,11 @@ from models.city import City
 
 class test_City(test_basemodel):
     """ """
+    @classmethod
+    def setUpClass(self):
+        """le setup de test_City"""
+        # self._path_list.append("tests/test_city.py")
+        self._path_list.append("models/city.py")
 
     def __init__(self, *args, **kwargs):
         """ """

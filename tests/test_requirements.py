@@ -88,5 +88,5 @@ class TestRequirements(object):
                                         )
                     else:
                         print(f"class has an unvalid name: {matche} in {_path}")
-            else:
-                print(f"no class found in {matches} in {_path}")
+            # else:
+            #     print(f"no class found in {matches} in {_path}")
