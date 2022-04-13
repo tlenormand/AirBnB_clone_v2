@@ -39,11 +39,11 @@ class BaseModel:
             self.updated_at = datetime.now()
         else:
             # if kwargs doesn't contain an id add it
-            if not "id" in kwargs:
+            if "id" not in kwargs:
                 kwargs["id"] = str(uuid.uuid4())
 
             # if kwargs doesn't contain an updated_at add it
-            if not "updated_at" in kwargs:
+            if "updated_at" not in kwargs:
                 kwargs["updated_at"] = datetime.now()
             else:
                 kwargs["updated_at"] = datetime.strptime(
@@ -52,7 +52,7 @@ class BaseModel:
                 )
 
             # if kwargs doesn't contain a created_at add it
-            if not "created_at" in kwargs:
+            if "created_at" not in kwargs:
                 kwargs["created_at"] = datetime.now()
             else:
                 kwargs["created_at"] = datetime.strptime(

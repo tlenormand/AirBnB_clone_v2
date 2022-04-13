@@ -7,13 +7,18 @@ from tests.test_requirements import TestRequirements
 import os
 
 
-@unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Only test filestorage")
+@unittest.skipIf(
+    os.getenv("HBNB_TYPE_STORAGE") == "db",
+    "Only test filestorage"
+)
 class test_fileStorage(TestRequirements, unittest.TestCase):
     """ Class to test the file storage method """
     @classmethod
     def setUpClass(self):
         """le setup de test_city"""
-        # self._path_list.append("tests/test_city.py")
+        self._path_list.append(
+            "tests/test_models/test_engine/test_file_storage.py"
+        )
         self._path_list.append("models/engine/file_storage.py")
 
     def setUp(self):
@@ -28,7 +33,7 @@ class test_fileStorage(TestRequirements, unittest.TestCase):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_obj_list_empty(self):
