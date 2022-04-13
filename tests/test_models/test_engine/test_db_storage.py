@@ -4,10 +4,10 @@ import unittest
 from tests.test_requirements import TestRequirements
 
 
-class test_console(TestRequirements, unittest.TestCase):
-    """ Class to test the console method """
+class test_dbstorage(TestRequirements, unittest.TestCase):
+    """ Class to test the db_storage method """
     @classmethod
     def setUpClass(self):
-        """le setup de console"""
+        """le setup de db_storage"""
         # self._path_list.append("tests/test_city.py")
-        self._path_list.append("console.py")
+        self._path_list.append("models/engine/db_storage.py")

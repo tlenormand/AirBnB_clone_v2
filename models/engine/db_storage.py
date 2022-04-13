@@ -30,7 +30,7 @@ class DBStorage:
 
     def all(self, cls=None):
         """
-        query on the current database session (self.__session) 
+        query on the current database session (self.__session)
         all objects depending of the class name
         """
         from models.user import User
