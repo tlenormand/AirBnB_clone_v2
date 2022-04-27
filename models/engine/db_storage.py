@@ -27,22 +27,30 @@ class DBStorage:
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
         self.__session = Session(self.__engine)
-        # self.__session = sessionmaker(bind=self.__engine)
-        # self.__session = Session()
 
     def all(self, cls=None):
         """
-        query on the current database session (self.__session) 
+        query on the current database session (self.__session)
         all objects depending of the class name
         """
+        from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
+        classes = [User, Place, State, City, Amenity, Review]
         dictionary = {}
         if cls:
-            query = self.__session.query(cls).all()
+            for obj in self.__session.query(cls).all():
+                dictionary[f"{obj.__class__.__name__}.{obj.id}"] = obj
         else:
-            query = self.__session.query().all()
+            for item in classes:
+                for obj in self.__session.query(item).all():
+                    dictionary[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
-        for obj in query:
-            dictionary[f"{obj.__class__.__name__}.{obj.id}"] = obj
+        if hasattr(dictionary, "_sa_instance_state"):
+            del dictionary["_sa_instance_state"]
 
         return dictionary
 

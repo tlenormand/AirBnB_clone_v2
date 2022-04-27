@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
+from cmath import e
 import cmd
 import sys
 from os import getenv
@@ -19,7 +20,7 @@ class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
 
     # determines prompt for interactive/non-interactive modes
-    prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
+    prompt = '(hbnb) '
 
     classes = {
                'BaseModel': BaseModel, 'User': User, 'Place': Place,
@@ -181,7 +182,7 @@ class HBNBCommand(cmd.Cmd):
 
         key = c_name + "." + c_id
         try:
-            print(storage._FileStorage__objects[key])
+            print(storage.all()[key])
         except KeyError:
             print("** no instance found **")
 
@@ -225,7 +226,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        from sqlalchemy import Column
         listObject = []
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
@@ -245,13 +245,17 @@ class HBNBCommand(cmd.Cmd):
                 session = Session(engine)
                 query = session.query(eval(args)).all()
                 for k in query:
+                    try:
+                        del k.__dict__["_sa_instance_state"]
+                    except Exception:
+                        pass
                     listObject.append(k.__str__())
             else:
-                for k, v in storage._FileStorage__objects.items():
+                for k, v in storage.all().items():
                     if k.split('.')[0] == args:
                         listObject.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 listObject.append(str(v))
 
         print("[", end='')
@@ -266,7 +270,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count current number of class instances"""
         count = 0
-        for k, v in storage._FileStorage__objects.items():
+        for k, v in storage.all().items():
             if args == k.split('.')[0]:
                 count += 1
         print(count)

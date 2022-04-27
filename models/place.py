@@ -3,26 +3,28 @@
 from os import getenv
 from models import storage
 from models.base_model import Base, BaseModel
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
 
-place_amenity = Table('place_amenity', Base.metadata,
-    Column(
-        'place_id',
-        String(60),
-        ForeignKey('places.id'),
-        primary_key=True,
-        nullable=False
-    ),
-    Column(
-        'amenity_id',
-        String(60),
-        ForeignKey('amenities.id'),
-        primary_key=True,
-        nullable=False
+if getenv("HBNB_TYPE_STORAGE") == "db":
+    place_amenity = Table(
+        'place_amenity',
+        Base.metadata,
+        Column(
+            'place_id',
+            String(60),
+            ForeignKey('places.id', onupdate="CASCADE", ondelete="CASCADE"),
+            primary_key=True
+        ),
+        Column(
+            'amenity_id',
+            String(60),
+            ForeignKey('amenities.id', onupdate="CASCADE", ondelete="CASCADE"),
+            primary_key=True
+        )
     )
-)
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -46,25 +48,12 @@ class Place(BaseModel, Base):
         )
         amenities = relationship(
             "Amenity",
-            backref="Place",
-            cascade="all, delete-orphan",
+            # backref="Place",
+            # cascade="all, delete-orphan",
             secondary=place_amenity,
-            viewonly=False
+            viewonly=False,
+            back_populates="place_amenities"
         )
-
-        @property
-        def get_amenities(self):
-            """ get list amenty.ids """
-            return self.amenity_ids
-
-        @amenities.setter
-        def amenities(self, value):
-            """ set amenities """
-            self.amenity_ids = []
-            for k in storage.__object:
-                if (k["__class__"] == "Amenity") and k["amenity_id"] == self.id:
-                    self.amenity_ids.append(k.id)
-
 
     else:
         city_id = ""
@@ -80,9 +69,23 @@ class Place(BaseModel, Base):
         amenity_ids = []
 
         @property
-        def get_reviews(self):
+        def reviews(self):
             listReview = []
             for k in storage.__object:
                 if (k["__class__"] == "Review") and k["place_id"] == self.id:
                     listReview.append(k)
             return listReview
+
+        @property
+        def amenities(self):
+            """ get list amenty.ids """
+            return self.amenity_ids
+
+        @amenities.setter
+        def amenities(self):
+            """ set amenities """
+            self.amenity_ids = []
+            for k in storage.__object:
+                if ((k["__class__"] == "Amenity") and
+                   k["amenity_id"] == self.id):
+                    self.amenity_ids.append(k.id)
