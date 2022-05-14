@@ -38,7 +38,7 @@ def python(text='is cool'):
     """
     Display python with the parameter, that got a default value
     """
-    return 'python ' + text.replace('_', ' ')
+    return 'Python ' + text.replace('_', ' ')
 
 
 if __name__ == '__main__':
