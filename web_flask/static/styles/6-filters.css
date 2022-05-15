@@ -59,6 +59,7 @@ section.filters .locations h4, .amenities h4{
     z-index: 1;
     max-height: 300px;
     overflow: auto;
+    -ms-overflow-style: none;
 }
 
 .locations:hover .popover {
