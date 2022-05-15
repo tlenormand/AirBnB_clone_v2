@@ -1,4 +1,8 @@
-.filters{
+::-webkit-scrollbar {
+    display: none;
+}
+
+.filters {
     height: 70px;
     background-color: white;
     width: 100%;
@@ -29,22 +33,22 @@ section.filters .locations, .amenities {
     margin-left: 40px;
 }
 
-section.filters .locations{
+section.filters .locations {
     border-right: 1px solid;
     border-color: #DDDDDD;
 }
 
-section.filters .locations h3, .amenities h3{
+section.filters .locations h3, .amenities h3 {
     font-weight: 600;
     margin-bottom: 2px;
 }
-section.filters .locations h4, .amenities h4{
+section.filters .locations h4, .amenities h4 {
     font-weight: 400;
     font-size: 14px;
     margin-top: 2px;
 }
 
-.popover{
+.popover {
     display: none;
     position: relative;
     background-color: #FAFAFA;
@@ -59,7 +63,6 @@ section.filters .locations h4, .amenities h4{
     z-index: 1;
     max-height: 300px;
     overflow: auto;
-    -ms-overflow-style: none;
 }
 
 .locations:hover .popover {
@@ -70,11 +73,11 @@ section.filters .locations h4, .amenities h4{
     display: block;
 }
 
-.popover ul, li{
+.popover ul, li {
     list-style-type: none;
 }
 
-.popover h2{
+.popover h2 {
     margin-top: 0px;
 }
 
